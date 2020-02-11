@@ -1,1 +1,1 @@
-drop table is exists spirits;
+drop table if exists spirits;
