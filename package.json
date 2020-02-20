@@ -7,10 +7,11 @@
     "seed": "psql -U postgres -d linus-server -f ./seeds/seed.linus_tables.sql",
     "migrate": "postgrator --config postgrator-config.js",
     "migrate:test": "env NODE_ENV=test npm run migrate",
+    "migrate:production" : "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "mocha --require test/setup.js",
-    "predeploy": "npm audit",
+    "predeploy": "npm audit && npm run migrate:production && npm run seed",
     "deploy": "git push heroku master"
   },
   "keywords": [],

@@ -21,11 +21,11 @@ app.use(morgan(morganOption, {
 app.use(cors());
 app.use(helemt());
 
-app.use('/api/cabinet', cabinetRouter);
-app.use('/api/recipes', RecipesRouter);
-app.use('/api/auth', AuthRouter);
-app.use('/api/user', UserRouter);
-app.use('/api/favorites', FavoritesRouter);
+app.use('/cabinet', cabinetRouter);
+app.use('/recipes', RecipesRouter);
+app.use('/auth', AuthRouter);
+app.use('/user', UserRouter);
+app.use('/favorites', FavoritesRouter);
 
 app.use((error, req, res, next)=>{
   let response;

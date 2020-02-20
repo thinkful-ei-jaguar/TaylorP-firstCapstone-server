@@ -40,7 +40,7 @@ userRouter
           )
             .then(user => {
               res.status(201)
-              .location(path.posix.join(`http://localhost:8080/api`, `/cabinet/${user.id}`))
+              .location(path.posix.join(`https://blooming-reef-26525.herokuapp.com`, `/cabinet/${user.id}`))
               .json(UserService.serializeUser(user))
             })
         })
