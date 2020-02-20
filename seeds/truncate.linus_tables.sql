@@ -2,5 +2,6 @@ truncate
   recipes,
   spirits,
   spirit_type,
-  linus_user
+  linus_user,
+  favorites
   restart identity cascade;

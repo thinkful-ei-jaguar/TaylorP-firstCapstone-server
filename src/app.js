@@ -4,6 +4,11 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helemt = require('helmet');
 const { NODE_ENV } = require('./config');
+const cabinetRouter = require('./cabinet/cabinet-router')
+const RecipesRouter = require('./recipes/recipes-router')
+const AuthRouter = require('./auth/auth-router')
+const UserRouter = require('./user/user-router')
+const FavoritesRouter = require('./favorites/favorites-router')
 
 const app = express();
 
@@ -16,10 +21,11 @@ app.use(morgan(morganOption, {
 app.use(cors());
 app.use(helemt());
 
-app.get('/', (req, res, next)=>{
-  
-  res.json({ message: 'Hello World' });
-});
+app.use('/api/cabinet', cabinetRouter);
+app.use('/api/recipes', RecipesRouter);
+app.use('/api/auth', AuthRouter);
+app.use('/api/user', UserRouter);
+app.use('/api/favorites', FavoritesRouter);
 
 app.use((error, req, res, next)=>{
   let response;
