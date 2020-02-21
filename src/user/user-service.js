@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const UserService = {
   validatePassword(password) {
     if(password.length < 8) {
-      return 'Password must be longer than 8 cahracters'
+      return 'Password must be longer than 8 characters'
     }
     if(password.length > 72) {
       return 'Password must be shorter than 72 characters'
@@ -18,6 +18,7 @@ const UserService = {
     }
     return null
   },
+
   hasUserWithUsername(db, user_name) {
     return db('linus_user')
       .where({ user_name })

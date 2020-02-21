@@ -4,7 +4,6 @@ create table recipes (
   recipe_img text not null,
   recipe_ingredients text not null,
   recipe_prep text not null,
-  favorited boolean not null,
   spirit_id integer references spirit_type(id) not null,
   tags text
 );

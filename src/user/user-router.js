@@ -16,7 +16,7 @@ userRouter
     
     const passwordError = UserService.validatePassword(password)
     if (passwordError)
-        return res.status(400).json({error: -1})
+        return res.status(400).json({error: passwordError})
     UserService.hasUserWithUsername(
       req.app.get('db'),
       user_name
