@@ -34,7 +34,7 @@ favoritesRouter
     recipe_id
   )
   .then(()=>{
-    res.status(204)
+    res.status(204).end()
   })
   .catch(next)
 })

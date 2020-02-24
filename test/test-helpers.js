@@ -63,15 +63,15 @@ function makeSpiritTypeArray() {
   return [
     {
       id: 1,
-      spirit_cat: 'spirit1'
+      spirit_cat: 'firstSpirit'
     },
     {
       id: 2,
-      spirit_cat: 'spirit2'
+      spirit_cat: 'secondSpirit'
     },
     {
       id: 3,
-      spirit_cat: 'spirit3'
+      spirit_cat: 'thirdSpirit'
     }
   ]
 }
@@ -105,7 +105,7 @@ function makeRecipesArray(spiritType) {
   return [
     {
       id: 1,
-      recipe_name: 'Test Recipe 1',
+      recipe_name: 'First Test Recipe',
       recipe_img: 'img',
       recipe_ingredients: 'test ingredient1,test ingredient2',
       recipe_prep: 'make the test, test it',
@@ -114,7 +114,7 @@ function makeRecipesArray(spiritType) {
     },
     {
       id: 2,
-      recipe_name: 'Test Recipe 2',
+      recipe_name: 'Second Test Recipe',
       recipe_img: 'img',
       recipe_ingredients: 'test ingredient1,test ingredient2',
       recipe_prep: 'make the test, test it',
@@ -123,7 +123,7 @@ function makeRecipesArray(spiritType) {
     },
     {
       id: 3,
-      recipe_name: 'Test Recipe 3',
+      recipe_name: 'Third Test Recipe',
       recipe_img: 'img',
       recipe_ingredients: 'test ingredient1,test ingredient2',
       recipe_prep: 'make the test, test it',
@@ -141,6 +141,45 @@ function makeFixtures() {
   const testFavorites = makeFavoritesArray(testUsers, testRecipes)
 
   return { testUsers, testSpiritType, testSpirits, testRecipes, testFavorites }
+}
+
+function makeExpectedRecipes(spirit_type, recipes) {
+  const spirit_cat = spirit_type.find(type => type.id === recipes.spirit_id)
+
+  return {
+    id: recipes.id,
+    recipe_name: recipes.recipe_name,
+    recipe_img: recipes.recipe_img,
+    recipe_ingredients: recipes.recipe_ingredients,
+    recipe_prep: recipes.recipe_prep,
+    spirit_cat: spirit_cat.spirit_cat
+  }
+}
+
+function makeExpectedSpirits(spirit, spirit_type) {
+  const spirit_cat = spirit_type.find(type => type.id === spirit.spirit_id)
+
+
+  return {
+    id: spirit.id,
+    spirit_name: spirit.spirit_name,
+    spirit_cat: spirit_cat.spirit_cat,
+    user_id: spirit.user_id,
+    spirit_id: spirit.spirit_id
+  }
+}
+
+function makeExpectedFavorites(favorite, recipes) {
+  const recipe = recipes.find(r => r.id === favorite.recipe_id)
+  const recipeName = recipe.recipe_name
+  const spirit_id = recipe.spirit_id
+  return {
+    favorite_id: favorite.id,
+    id: favorite.recipe_id,
+    user_id: favorite.user_id,
+    recipe_name: recipeName,
+    spirit_id,
+  }
 }
 
 function cleanTables(db) {
@@ -204,6 +243,9 @@ module.exports = {
   makeFavoritesArray,
   makeAuthHeader,
   makeFixtures,
+  makeExpectedRecipes,
+  makeExpectedSpirits,
+  makeExpectedFavorites,
 
   cleanTables,
   seedUsersTable,

@@ -19,7 +19,7 @@ spiritsRouter
   })
   .post(bodyParser, (req, res, next)=>{
     const { user_id, spirit_name, spirit_id } = req.body
-    const newSpirit = { spirit_name, spirit_id, spirit_img: null, user_id, }
+    const newSpirit = { spirit_name, spirit_id, user_id }
 
     if(spirit_name == null)
       return res.status(400).json({ error: `Missing 'Spirit Name' in request body`})
@@ -44,7 +44,7 @@ spiritsRouter
       id
     )
       .then(()=>{
-        res.status(204)
+        res.status(204).end()
       })
       .catch(next)
   })

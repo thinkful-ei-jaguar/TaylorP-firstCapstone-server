@@ -6,9 +6,9 @@ const RecipesService = {
       .select(
         'recipes.id',
         'recipes.recipe_name',
+        'recipes.recipe_img',
         'recipes.recipe_ingredients',
         'recipes.recipe_prep',
-        'recipes.favorited',
         'spirit_type.spirit_cat')
       .from('recipes')
       .join(
@@ -23,9 +23,9 @@ const RecipesService = {
       .select(
         'recipes.id',
         'recipes.recipe_name',
+        'recipes.recipe_img',
         'recipes.recipe_ingredients',
         'recipes.recipe_prep',
-        'recipes.favorited',
         'spirit_type.spirit_cat')
       .from('recipes')
       .join(
@@ -41,11 +41,17 @@ const RecipesService = {
       .select(
         'recipes.id',
         'recipes.recipe_name',
+        'recipes.recipe_img',
         'recipes.recipe_ingredients',
         'recipes.recipe_prep',
-        'recipes.favorited'
+        'spirit_type.spirit_cat'
         )
       .from('recipes')
+      .join(
+        'spirit_type',
+        'recipes.spirit_id',
+        'spirit_type.id'
+      )
       .where(
         db.raw(
           `LOWER(recipe_name) LIKE LOWER('%${name}%')`
@@ -58,9 +64,9 @@ const RecipesService = {
       .select(
         'recipes.id',
         'recipes.recipe_name',
+        'recipes.recipe_img',
         'recipes.recipe_ingredients',
         'recipes.recipe_prep',
-        'recipes.favorited',
         'spirit_type.spirit_cat')
       .from('recipes')
       .join(
