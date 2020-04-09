@@ -6,8 +6,6 @@ This is the server used for the Linus application.
 
 ## API Endpoints
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
 + `/recipes` accepts GET requests along with parameters of keyword & filter, where keyword looks in the recipe name, and filter looks for the spirit category. Both need to be strings.
 + `/cabinet/:id` accepts GET and POST requests, with `:id` referring to the user_id. GET requests return all the spirits that the user has saved, and the POST request is used to add a spirit to the users collection.
 + `/favorites` accepts POST and DELETE requests. This posts and deletes new favorites, the user_id is sent via the body of the request.
