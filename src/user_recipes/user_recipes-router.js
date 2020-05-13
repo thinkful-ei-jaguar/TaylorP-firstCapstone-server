@@ -57,4 +57,21 @@ UserRecipesRouter.route("/:user_id")
     });
   });
 
+UserRecipesRouter.route("/:user_id/:id")
+  .all(requireAuth)
+  .all((req, res, next) => {
+    const { user_id, id } = req.params;
+    RecipesService.getUserRceipeById(req.app.get("db"), user_id, id)
+      .then((recipe) => {
+        if (!recipe) {
+          return res.status(404).json({ error: "Recipe Not Found" });
+        }
+        res.recipe = recipe;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(res.recipe);
+  });
 module.exports = UserRecipesRouter;

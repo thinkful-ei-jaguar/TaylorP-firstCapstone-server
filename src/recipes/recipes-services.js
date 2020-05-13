@@ -67,6 +67,17 @@ const RecipesService = {
     return db.select("*").from("recipes").where("id", id).first();
   },
 
+  getUserRceipeById(db, user_id, id) {
+    return db
+      .select("*")
+      .from("user_recipes")
+      .where(
+        db.raw(`user_recipes.user_id=${user_id}
+      and user_recipes.id=${id}`)
+      )
+      .first();
+  },
+
   postNewRecipe(db, newRecipe) {
     return db
       .insert(newRecipe)
