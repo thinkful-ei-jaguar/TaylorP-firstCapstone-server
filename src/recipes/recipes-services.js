@@ -86,6 +86,15 @@ const RecipesService = {
       .then(([recipe]) => recipe);
   },
 
+  deleteUserRecipe(db, user_id, id) {
+    return db("user_recipes")
+      .where(
+        db.raw(`user_id=${user_id}
+        and id=${id}`)
+      )
+      .delete();
+  },
+
   getUsermadeRecipesByUserId(db, user_id) {
     return db
       .select(

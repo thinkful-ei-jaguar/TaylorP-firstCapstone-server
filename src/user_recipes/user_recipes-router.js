@@ -73,5 +73,14 @@ UserRecipesRouter.route("/:user_id/:id")
   })
   .get((req, res, next) => {
     res.json(res.recipe);
+  })
+  .delete(bodyParser, (req, res, next) => {
+    const { user_id, id } = req.params;
+
+    RecipesService.deleteUserRecipe(req.app.get("db"), user_id, id)
+      .then(() => {
+        res.status(204);
+      })
+      .catch(next);
   });
 module.exports = UserRecipesRouter;
