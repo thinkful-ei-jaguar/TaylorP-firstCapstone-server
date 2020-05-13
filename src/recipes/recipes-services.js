@@ -4,90 +4,91 @@ const RecipesService = {
   getAllRecipes(db) {
     return db
       .select(
-        'recipes.id',
-        'recipes.recipe_name',
-        'recipes.recipe_img',
-        'recipes.recipe_ingredients',
-        'recipes.recipe_prep',
-        'spirit_type.spirit_cat')
-      .from('recipes')
-      .join(
-        'spirit_type',
-        'recipes.spirit_id',
-        'spirit_type.id'
+        "recipes.id",
+        "recipes.recipe_name",
+        "recipes.recipe_img",
+        "recipes.recipe_ingredients",
+        "recipes.recipe_prep",
+        "spirit_type.spirit_cat"
       )
+      .from("recipes")
+      .join("spirit_type", "recipes.spirit_id", "spirit_type.id");
   },
 
   getRecipeBySpirit(db, type) {
     return db
       .select(
-        'recipes.id',
-        'recipes.recipe_name',
-        'recipes.recipe_img',
-        'recipes.recipe_ingredients',
-        'recipes.recipe_prep',
-        'spirit_type.spirit_cat')
-      .from('recipes')
-      .join(
-        'spirit_type',
-        'recipes.spirit_id',
-        'spirit_type.id'
+        "recipes.id",
+        "recipes.recipe_name",
+        "recipes.recipe_img",
+        "recipes.recipe_ingredients",
+        "recipes.recipe_prep",
+        "spirit_type.spirit_cat"
       )
-      .where('spirit_cat', type)
+      .from("recipes")
+      .join("spirit_type", "recipes.spirit_id", "spirit_type.id")
+      .where("spirit_cat", type);
   },
 
   getRecipeByName(db, name) {
     return db
       .select(
-        'recipes.id',
-        'recipes.recipe_name',
-        'recipes.recipe_img',
-        'recipes.recipe_ingredients',
-        'recipes.recipe_prep',
-        'spirit_type.spirit_cat'
-        )
-      .from('recipes')
-      .join(
-        'spirit_type',
-        'recipes.spirit_id',
-        'spirit_type.id'
+        "recipes.id",
+        "recipes.recipe_name",
+        "recipes.recipe_img",
+        "recipes.recipe_ingredients",
+        "recipes.recipe_prep",
+        "spirit_type.spirit_cat"
       )
-      .where(
-        db.raw(
-          `LOWER(recipe_name) LIKE LOWER('%${name}%')`
-        )
-      )
+      .from("recipes")
+      .join("spirit_type", "recipes.spirit_id", "spirit_type.id")
+      .where(db.raw(`LOWER(recipe_name) LIKE LOWER('%${name}%')`));
   },
 
   getRecipeBySpiritAndName(db, name, type) {
     return db
       .select(
-        'recipes.id',
-        'recipes.recipe_name',
-        'recipes.recipe_img',
-        'recipes.recipe_ingredients',
-        'recipes.recipe_prep',
-        'spirit_type.spirit_cat')
-      .from('recipes')
-      .join(
-        'spirit_type',
-        'recipes.spirit_id',
-        'spirit_type.id'
+        "recipes.id",
+        "recipes.recipe_name",
+        "recipes.recipe_img",
+        "recipes.recipe_ingredients",
+        "recipes.recipe_prep",
+        "spirit_type.spirit_cat"
       )
+      .from("recipes")
+      .join("spirit_type", "recipes.spirit_id", "spirit_type.id")
       .where(
         db.raw(`spirit_cat = '${type}'
       and LOWER(recipe_name) like LOWER('%${name}%')`)
-      )
-
+      );
   },
 
   getById(db, id) {
-    return db
-      .select('*')
-      .from('recipes')
-      .where('id', id)
-      .first()
-  }
-}
+    return db.select("*").from("recipes").where("id", id).first();
+  },
 
-module.exports = RecipesService
+  postNewRecipe(db, newRecipe) {
+    return db
+      .insert(newRecipe)
+      .into("user_recipes")
+      .returning("*")
+      .then(([recipe]) => recipe);
+  },
+
+  getUsermadeRecipesByUserId(db, user_id) {
+    return db
+      .select(
+        "user_recipes.id",
+        "user_recipes.recipe_name",
+        "user_recipes.recipe_img",
+        "user_recipes.recipe_ingredients",
+        "recipe_prep",
+        "spirit_type.spirit_cat"
+      )
+      .from("user_recipes")
+      .join("spirit_type", "user_recipes.spirit_id", "spirit_type.id")
+      .where({ user_id });
+  },
+};
+
+module.exports = RecipesService;
