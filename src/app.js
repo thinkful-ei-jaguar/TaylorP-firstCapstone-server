@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helemt());
 
 app.use("/cabinet", cabinetRouter);
